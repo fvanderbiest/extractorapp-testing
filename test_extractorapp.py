@@ -101,11 +101,11 @@ def download(url):
     base64string = base64.b64encode('%s:%s' % (username, password))
     request.add_header("Authorization", "Basic %s" % base64string)
     context = ssl._create_unverified_context()
+    print "Polling file..",
     while True:
         # file might not be available right now
         try:
             u = urllib2.urlopen(request, context=context)
-            print "Polling file..",
         except urllib2.HTTPError:
             time.sleep(1)
             print ".",
