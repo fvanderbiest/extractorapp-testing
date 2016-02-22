@@ -8,6 +8,8 @@ RUN apt-get update && \
 
 RUN pip install httplib2 simplejson lxml
 
-ADD test_extractorapp.py /tmp
+ADD test_extractorapp.py .
 
-CMD python /tmp/test_extractorapp.py
+VOLUME /tmp
+
+CMD python test_extractorapp.py

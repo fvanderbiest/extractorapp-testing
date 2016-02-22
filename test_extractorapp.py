@@ -95,7 +95,7 @@ def post_dict(url, dictionary):
 
 
 def download(url):
-    file_name = url.split('=')[-1]+'.zip'
+    file_name = '/tmp/'+url.split('=')[-1]+'.zip'
 
     request = urllib2.Request(url)
     base64string = base64.b64encode('%s:%s' % (username, password))
@@ -139,7 +139,7 @@ def main():
     print 'Archive is downloaded from {}'.format(root.link.text)
     filename = download(root.link.text)
     archive = zipfile.ZipFile(filename, 'r')
-    failures = archive.read('extraction-{}/failures.txt'.format(filename.split('.zip')[0]))
+    failures = archive.read('extraction-{}/failures.txt'.format(filename.split('.zip')[0].replace('/tmp/', '')))
     print failures
 
 
