@@ -1,25 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from httplib2 import Http
-import urllib2
-try:
-    # For c speedups
-    from simplejson import loads, dumps
-except ImportError:
-    from json import loads, dumps
-
+import os
 import base64
 import ssl
 import time
 import zipfile
-from lxml import objectify
+from httplib2 import Http
+import urllib2
+try:
+    from simplejson import loads, dumps
+except ImportError:
+    from json import loads, dumps
+from lxml import objectify, etree
 
 
-instance_base_url = 'https://sdi.georchestra.org'
-username = "me"
-password = "pwd"
-email = "test@me.com"
+instance_base_url = os.getenv('EXTRACTORAPP_INSTANCE_BASEURL', 'https://sdi.georchestra.org')
+username = os.getenv('EXTRACTORAPP_INSTANCE_USERNAME', 'testadmin')
+password = os.getenv('EXTRACTORAPP_INSTANCE_PASSWORD', 'testadmin')
+email = os.getenv('EXTRACTORAPP_REQUESTOR_EMAIL', 'test@me.com')
 
 spec = {
     "emails": [email],
@@ -106,11 +105,13 @@ def download(url):
         # file might not be available right now
         try:
             u = urllib2.urlopen(request, context=context)
+            print "Polling file..",
         except urllib2.HTTPError:
-            time.sleep(5)
-            print "File not yet available. Trying again in 5 sec..."
+            time.sleep(1)
+            print ".",
             continue
         break
+    print "."
 
     f = open(file_name, 'wb')
     while True:
@@ -129,7 +130,11 @@ def main():
         url = instance_base_url+'/extractorapp/extractor/initiate',
         dictionary = spec
     )
-    root = objectify.fromstring(resp)
+    try:
+        root = objectify.fromstring(resp)
+    except etree.XMLSyntaxError:
+        print "Service did not respond as expected. Problem with credentials ?"
+        return
     print 'Archive is downloaded from {}'.format(root.link.text)
     filename = download(root.link.text)
     archive = zipfile.ZipFile(filename, 'r')
