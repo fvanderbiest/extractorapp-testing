@@ -138,7 +138,7 @@ def main():
     print 'Archive is downloaded from {}'.format(root.link.text)
     filename = download(root.link.text)
     archive = zipfile.ZipFile(filename, 'r')
-    failures = archive.read('extraction-{}/failures.html'.format(filename.split('.zip')[0]))
+    failures = archive.read('extraction-{}/failures.txt'.format(filename.split('.zip')[0]))
     print failures
 
 
