@@ -20,7 +20,7 @@ docker build -t fvanderbiest/extractorapp_testing .
 
 Pull image from docker hub & run with:
 ```
-docker run -e EXTRACTORAPP_INSTANCE_BASEURL='https://sdi.georchestra.org' \
+docker run --rm -e EXTRACTORAPP_INSTANCE_BASEURL='https://sdi.georchestra.org' \
 -e EXTRACTORAPP_INSTANCE_USERNAME='testadmin' \
 -e EXTRACTORAPP_INSTANCE_PASSWORD='testadmin' \
 -e EXTRACTORAPP_REQUESTOR_EMAIL='test@me.com' \
