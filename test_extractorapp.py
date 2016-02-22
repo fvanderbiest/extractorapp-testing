@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import sys
 import base64
 import ssl
 import time
@@ -104,14 +105,15 @@ def download(url):
     print "Polling file..",
     while True:
         # file might not be available right now
+        sys.stdout.write(".")
+        sys.stdout.flush()
         try:
             u = urllib2.urlopen(request, context=context)
         except urllib2.HTTPError:
             time.sleep(1)
-            print ".",
             continue
         break
-    print ".\n"
+    print "\n"
 
     f = open(file_name, 'wb')
     while True:
@@ -139,9 +141,12 @@ def main():
     print 'Archive is downloaded from {}'.format(root.link.text)
     filename = download(root.link.text)
     archive = zipfile.ZipFile(filename, 'r')
-    failures = archive.read('extraction-{}/failures.txt'.format(filename.split('.zip')[0].replace('/tmp/', '')))
-    print failures
-
+    try:
+        failures = archive.read('extraction-{}/failures.txt'.format(filename.split('.zip')[0].replace('/tmp/', '')))
+        print failures
+    except KeyError:
+        print 'Success !'
+    print "Check file {}".format(filename)
 
 if __name__ == "__main__":
     main()
