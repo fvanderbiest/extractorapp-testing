@@ -58,7 +58,7 @@ spec = {
     {
         "bbox": {
             "srs": "EPSG:4326",
-            "value": [1.1883944217289, 46.850175233645, 1.3510331483644, 46.946553738317]
+            "value": [0, 45, 5, 50]
         },
         "owsUrl": instance_base_url+"/geoserver/ci/wfs",
         "owsType": "WFS",
@@ -68,7 +68,7 @@ spec = {
     {
         "bbox": {
             "srs": "EPSG:4326",
-            "value": [1.1883944217289, 46.850175233645, 1.3510331483644, 46.946553738317]
+            "value": [0, 45, 5, 50]
         },
         "owsUrl": instance_base_url+"/geoserver/ci/wfs",
         "owsType": "WFS",
