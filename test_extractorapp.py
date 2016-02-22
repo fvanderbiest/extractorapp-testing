@@ -111,7 +111,7 @@ def download(url):
             print ".",
             continue
         break
-    print "."
+    print ".\n"
 
     f = open(file_name, 'wb')
     while True:
@@ -126,6 +126,7 @@ def main():
     print 'Extracting {} layers:'.format(len(spec['layers']))
     for layer in spec['layers']:
         print "  * {} from {}".format(layer['layerName'], layer['owsUrl'])
+    print '\n'
     resp = post_dict(
         url = instance_base_url+'/extractorapp/extractor/initiate',
         dictionary = spec
