@@ -5,10 +5,10 @@
 Requires python >= 2.7.9
 
 ```
-$ sudo apt-get install python2.7 python2.7-dev python-virtualenv libxslt1-dev lib32z1-dev
-$ virtualenv env
-$ source env/bin/activate
-$ pip install httplib2 simplejson lxml
+sudo apt-get install python2.7 python2.7-dev python-virtualenv libxslt1-dev lib32z1-dev
+virtualenv env
+source env/bin/activate
+pip install httplib2 simplejson lxml
 ```
 
 Or build a docker image with, eg:
